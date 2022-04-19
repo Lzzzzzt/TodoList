@@ -1,7 +1,9 @@
 <template>
   <div id="container">
-    <v-expansion-panels id="lists" inset>
-      <TodoListItem v-for="item in todos" :key="item.id" :item="item"></TodoListItem>
+    <v-expansion-panels accordion>
+      <transition-group id="lists" tag="div">
+        <TodoListItem v-for="item in todos" :key="item.id" :item="item"></TodoListItem>
+      </transition-group>
     </v-expansion-panels>
   </div>
 </template>
@@ -92,5 +94,19 @@ export default {
 
 #lists::-webkit-scrollbar {
   width: 0 !important;
+}
+
+.v-enter-active, .v-leave-active {
+  transition: all ease 0.5s;
+}
+
+.v-enter-to, .v-leave {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.v-leave-to, .v-enter {
+  transform: translateX(100%);
+  opacity: 0;
 }
 </style>

@@ -15,10 +15,13 @@
       </v-card-subtitle>
       <v-card-text class="ml-10 mr-10">
         {{ date }}
-        <a href="https://v1.hitokoto.cn">@hitokoto</a>
+        <br>
+        <a href="https://developer.hitokoto.cn/">@hitokoto</a>
       </v-card-text>
       <v-card-actions class="mb-5 ml-10 mr-10 mt-3">
-        <v-btn :disabled="click" @click="antiShake">换一个?</v-btn>
+        <v-btn :color="colors[Math.floor(Math.random() * 5)]" :disabled="click || loading" @click="antiShake">
+          <span class="btn-text">换一个?</span>
+        </v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -39,6 +42,7 @@ export default {
       changeTimes: 0,
       source: ['gt', 'sina', 'gh'],
       sourceIndex: 2,
+      colors: ['#01295F', '#437F97', '#849324', '#FFB30F', '#EC4E20']
     }
   },
   computed: {
@@ -46,17 +50,16 @@ export default {
       return moment(parseInt(this.sentence.created_at) * 1000).format('LL');
     },
     loading() {
-      return JSON.stringify(this.sentence) === '{}' && this.changeTimes === this.clickTimes;
-    }
+      return JSON.stringify(this.sentence) === '{}' || this.changeTimes !== this.clickTimes;
+    },
   },
   methods: {
     getSentence() {
-      fetch('https://v1.hitokoto.cn?c=a&c=b&c=d&c=c&c=h&c=i').then(
+      fetch('https://v1.hitokoto.cn?c=a&c=b&c=d&c=c&c=h&c=i&max_length=24').then(
           response => response.json()
       ).then(
           json => {
             this.sentence = {...this.sentence, ...json}
-            this.changeTimes++;
           }
       ).catch(
           err => console.error(err)
@@ -72,6 +75,14 @@ export default {
     },
     render() {
       this.sourceIndex = Math.floor(Math.random() * 3);
+    }
+  },
+  watch: {
+    sentence: {
+      deep: true,
+      handler() {
+        this.changeTimes++;
+      }
     }
   },
   mounted() {
@@ -99,4 +110,7 @@ export default {
   transform: translateY(-50%);
 }
 
+.btn-text {
+  color: whitesmoke;
+}
 </style>

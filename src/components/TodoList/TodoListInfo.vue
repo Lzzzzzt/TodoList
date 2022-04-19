@@ -1,10 +1,11 @@
 <template>
   <div class="Info">
-    <v-progress-circular :color="colors[Math.floor(this.rate / 20) - 1]" :value="listInfo.length === 0 ? 0 : rate"
-                         size="60">
-      {{ this.listInfo.done }} / {{ this.listInfo.length }}
+    <v-progress-circular :color="color" :value="listInfo.length === 0 ? 0 : rate" size="60">
+      {{ listInfo.done }} / {{ listInfo.length }}
     </v-progress-circular>
-    <v-btn color="error" @click="deleteDone">删除已完成</v-btn>
+    <transition>
+      <v-btn v-show="listInfo.done !== 0" color="error" @click="deleteDone">删除已完成</v-btn>
+    </transition>
   </div>
 </template>
 
@@ -23,6 +24,9 @@ export default {
   computed: {
     rate() {
       return this.listInfo.done / this.listInfo.length * 100
+    },
+    color() {
+      return this.colors[Math.floor(this.rate / 20) - 1]
     }
   },
   methods: {
@@ -45,5 +49,17 @@ export default {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+.v-enter-active, .v-leave-active {
+  transition: opacity ease 0.3s;
+}
+
+.v-enter-to, .v-leave {
+  opacity: 1;
+}
+
+.v-enter, .v-leave-to {
+  opacity: 0;
 }
 </style>

@@ -99,4 +99,6 @@ export default {
   text-decoration: line-through;
   color: darkgray;
 }
+
+
 </style>
