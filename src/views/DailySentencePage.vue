@@ -1,12 +1,37 @@
 <template>
   <div class="root">
-    <v-img :src="`https://api.paugram.com/wallpaper/?source=${source[sourceIndex]}`"
-           alt="https://api.paugram.com/wallpaper/" class="img"
-           height="100%"
-           width="100%"
-           @click="render"></v-img>
+    <v-carousel :show-arrows="false" class="carousel" cycle height="100%" hide-delimiters>
+      <v-carousel-item v-for="(src, i) in source" :key="i"
+                       reverse-transition="scroll-y-transition"
+                       transition="scroll-y-transition">
+        <v-img :src="`https://api.paugram.com/wallpaper/?source=${src}`"
+               alt="https://api.paugram.com/wallpaper/"
+               height="100vh"
+               width="100vw"
+               @click="render"
+        ></v-img>
+      </v-carousel-item>
+    </v-carousel>
     <v-card :loading="loading" class="text" elevation="8" height="300px" shaped
             width="600px">
+      <vue-particles
+          :clickEffect="true"
+          :hoverEffect="true"
+          :lineLinked="true"
+          :lineOpacity="0.2"
+          :linesDistance="128"
+          :linesWidth="1"
+          :moveSpeed="3"
+          :particleOpacity="0.3"
+          :particleSize="3"
+          :particlesNumber="128"
+          clickMode="push"
+          color="#000000"
+          hoverMode="grub"
+          linesColor="#000000"
+          shapeType="circle"
+      >
+      </vue-particles>
       <v-card-title class="mt-10 ml-10 mr-10">
         {{ sentence.hitokoto }}
       </v-card-title>
@@ -40,14 +65,14 @@ export default {
       click: false,
       clickTimes: 1,
       changeTimes: 0,
-      source: ['gt', 'sina', 'gh'],
-      sourceIndex: 2,
-      colors: ['#01295F', '#437F97', '#849324', '#FFB30F', '#EC4E20']
+      colors: ['#01295F', '#437F97', '#849324', '#FFB30F', '#EC4E20'],
+      source: ['gh', 'gt', 'paul']
     }
   },
   computed: {
     date() {
-      return moment(parseInt(this.sentence.created_at) * 1000).format('LL');
+      let date = moment(parseInt(this.sentence.created_at) * 1000).format('LL');
+      return date === 'Invalid date' ? '' : date;
     },
     loading() {
       return JSON.stringify(this.sentence) === '{}' || this.changeTimes !== this.clickTimes;
@@ -101,6 +126,9 @@ export default {
 .img {
   position: absolute;
   cursor: pointer;
+  top: 50%;
+  width: 50%;
+  z-index: 1;
 }
 
 .text {
@@ -112,5 +140,14 @@ export default {
 
 .btn-text {
   color: whitesmoke;
+}
+
+.carousel {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>

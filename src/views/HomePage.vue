@@ -18,22 +18,17 @@
         shapeType="circle"
     >
     </vue-particles>
-    <router-view style="z-index: 1"></router-view>
+    <v-card-title class="text-h1 align-center justify-center">Welcome</v-card-title>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: "TodoListPage"
+  name: "HomePage",
 }
 </script>
 
 <style scoped>
-
-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 </style>
