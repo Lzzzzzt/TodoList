@@ -4,7 +4,10 @@
       <v-card id="App" class="mx-auto overflow-hidden" height="100%">
         <v-app-bar fixed height="50px">
           <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-          <v-toolbar-title ref="title" style="width: 150px">{{ $route.path.split('/')[1] || 'Home' }}</v-toolbar-title>
+          <v-toolbar-title ref="title" style="width: 150px; user-select: none">{{
+              $route.path.split('/')[1] || 'Home'
+            }}
+          </v-toolbar-title>
           <router-view name="TodoListNavBar"></router-view>
         </v-app-bar>
         <v-navigation-drawer v-model="drawer" absolute temporary>

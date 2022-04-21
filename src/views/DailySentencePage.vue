@@ -5,7 +5,7 @@
                        reverse-transition="scroll-y-transition"
                        transition="scroll-y-transition">
         <v-img :src="`https://api.paugram.com/wallpaper/?source=${src}`"
-               alt="https://api.paugram.com/wallpaper/"
+               alt="https://api.paugram.com/"
                height="100vh"
                width="100vw"
                @click="render"

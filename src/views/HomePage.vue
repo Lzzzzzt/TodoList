@@ -18,7 +18,7 @@
         shapeType="circle"
     >
     </vue-particles>
-    <v-card-title class="text-h1 align-center justify-center">Welcome</v-card-title>
+    <v-card-title class="text-h1 align-center justify-center" style="user-select: none">Welcome</v-card-title>
   </div>
 </template>
 
