@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <v-expansion-panels accordion>
+    <v-expansion-panels>
       <transition-group id="lists" tag="div">
         <TodoListItem v-for="item in todos" :key="item.id" :item="item"></TodoListItem>
       </transition-group>

@@ -1,25 +1,37 @@
 <template>
   <v-expansion-panel ref="item">
-    <v-expansion-panel-header>
-      <span :class="{done: item.done}">{{ item.title }}</span>
+    <v-expansion-panel-header :class="{important: cachedItem.important && !cachedItem.done}" class="item">
+      <span :class="{done: cachedItem.done}">
+        <transition>
+          <v-icon v-show="cachedItem.important" :color="cachedItem.done ? 'lightgray' : 'red'" class="mr-1 icon">
+          mdi-alert-octagram
+          </v-icon>
+        </transition>
+        {{ cachedItem.title }}
+      </span>
     </v-expansion-panel-header>
-    <v-expansion-panel-content>
-      <v-checkbox v-model="done" label="标记为完成" @click.prevent="changeItemState"></v-checkbox>
+    <v-expansion-panel-content :class="{important: cachedItem.important && !cachedItem.done}" class="item">
+      <v-row justify="space-between">
+        <v-checkbox v-model="cachedItem.done" label="标记为完成" style="width: 50%;"
+                    @click.prevent="changeItem('done')"></v-checkbox>
+        <v-checkbox v-model="cachedItem.important" label="标记为重要" style="width: 50%;"
+                    @click.prevent="changeItem('important')"></v-checkbox>
+      </v-row>
       <v-row align="center" justify="space-between">
         <div>{{ item.date | date }}</div>
         <div>
           <v-dialog ref="dialog" max-width="600" transition="dialog-bottom-transition">
             <template v-slot:activator="{ on, attrs }">
-              <v-btn color="primary" v-bind="attrs" v-on="on">修改</v-btn>
+              <v-btn color="primary" elevation="0" v-bind="attrs" v-on="on">修改</v-btn>
             </template>
             <template>
               <v-card class="pa-10">
                 <v-card-text>
-                  <v-text-field v-model="newTitle" label="Things To Do" outlined>
+                  <v-text-field v-model="cachedItem.title" label="Things To Do" outlined>
                   </v-text-field>
                 </v-card-text>
                 <v-card-actions class="justify-end">
-                  <v-btn color="primary" elevation="0" @click="changeItem">确定</v-btn>
+                  <v-btn color="primary" elevation="0" @click="changeItem('title')">确定</v-btn>
                 </v-card-actions>
               </v-card>
             </template>
@@ -61,8 +73,7 @@ export default {
   },
   data() {
     return {
-      done: this.item.done,
-      newTitle: this.item.title,
+      cachedItem: this.item
     }
   },
   filters: {
@@ -77,12 +88,21 @@ export default {
         this.$root.$emit('deleteItem', this.item.id);
       }, 300);
     },
-    changeItemState() {
-      this.$root.$emit('changeItemState', this.item.id);
-    },
-    changeItem() {
-      this.$refs.dialog.isActive = false;
-      this.$root.$emit('changeItem', {title: this.newTitle, id: this.item.id, date: new Date().getTime()});
+    changeItem(category) {
+      switch (category) {
+        case 'done':
+          this.$root.$emit('changeItem', {id: this.cachedItem.id, done: this.cachedItem.done});
+          break;
+        case 'important':
+          this.$root.$emit('changeItem', {id: this.cachedItem.id, important: this.cachedItem.important});
+          break;
+        case 'title':
+          this.$refs.dialog.isActive = false;
+          this.$root.$emit('changeItem', {title: this.cachedItem.title, id: this.item.id, date: new Date().getTime()});
+          break;
+        default:
+          return;
+      }
     }
   },
 }
@@ -96,9 +116,30 @@ export default {
 }
 
 .done {
-  text-decoration: line-through;
   color: darkgray;
 }
 
+.important {
+  background-color: rgba(225, 82, 65, 0.1);
+}
 
+.item {
+  transition: background-color ease 0.3s;
+}
+
+.icon {
+  width: 20px;
+}
+
+.v-enter-active, .v-leave-active {
+  transition: opacity ease 0.3s;
+}
+
+.v-enter, .v-leave-to {
+  opacity: 0;
+}
+
+.v-enter-to, .v-leave {
+  opacity: 1;
+}
 </style>

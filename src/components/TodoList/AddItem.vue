@@ -34,7 +34,8 @@ export default {
         id: nanoid(),
         title: this.itemTitle,
         date: new Date().getTime(),
-        done: false
+        done: false,
+        important: false,
       });
       this.$refs.input.blur();
       this.itemTitle = '';

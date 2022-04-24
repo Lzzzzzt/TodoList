@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{'elevation-4': !hover, 'elevation-8': hover}" @mouseout="hover = false"
+       @mouseover="hover = true">
     <AddItem id="input" style="width: 100%; max-height: 80px; min-height: 80px; margin-top: 10px"></AddItem>
     <TodoListItems style="width: 90%; height: 400px"></TodoListItems>
     <TodoListInfo></TodoListInfo>
@@ -14,6 +15,11 @@ import TodoListInfo from "@/components/TodoList/TodoListInfo";
 export default {
   name: "TodoList",
   components: {AddItem, TodoListItems, TodoListInfo},
+  data() {
+    return {
+      hover: false
+    }
+  }
 }
 </script>
 
@@ -31,9 +37,6 @@ export default {
 
   border-radius: 10px;
 
-  background-color: aliceblue;
-
-  box-shadow: black 5px 5px 10px -10px;
-
+  background-color: #F1F2F6;
 }
 </style>
