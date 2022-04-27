@@ -15,6 +15,9 @@ export default new VueRouter({
             name: 'Home',
             path: '/',
             component: HomePage,
+            meta: {
+                name: 'Home'
+            }
         },
         {
             name: 'TodoListPage',
@@ -28,11 +31,17 @@ export default new VueRouter({
                 {
                     name: 'TodoListMain',
                     path: 'List',
-                    component: TodoList
+                    meta: {
+                        name: 'TodoList'
+                    },
+                    component: TodoList,
                 },
                 {
                     name: 'TodoListHistory',
                     path: 'History',
+                    meta: {
+                        name: 'TodoList'
+                    },
                     component: TodoListHistory
                 }
             ]
@@ -41,6 +50,9 @@ export default new VueRouter({
             name: 'DailySentencePage',
             path: '/DailySentence',
             component: DailySentencePage,
+            meta: {
+                name: '一言'
+            }
         }
     ]
 })

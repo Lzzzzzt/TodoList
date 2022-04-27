@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import store from './store/index'
 import router from './router/index'
 
 import 'vuetify/dist/vuetify.min.css'
@@ -12,8 +13,10 @@ Vue.use(VueParticles)
 
 Vue.config.productionTip = false
 
+
 new Vue({
-  vuetify: new Vuetify(),
-  router,
-  render: h => h(App)
+    store,
+    router,
+    vuetify: new Vuetify(),
+    render: h => h(App)
 }).$mount('#app')

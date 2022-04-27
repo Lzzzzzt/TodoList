@@ -7,18 +7,20 @@
         :lineOpacity="0.2"
         :linesDistance="128"
         :linesWidth="1"
-        :moveSpeed="3"
+        :moveSpeed="2"
         :particleOpacity="0.3"
         :particleSize="3"
         :particlesNumber="64"
         clickMode="push"
         color="#000000"
-        hoverMode="repulse"
+        hoverMode="grab"
         linesColor="#000000"
         shapeType="circle"
     >
     </vue-particles>
-    <router-view style="z-index: 1"></router-view>
+    <keep-alive>
+      <router-view class="overflow-y-auto overflow-x-auto" style="z-index: 1"></router-view>
+    </keep-alive>
   </div>
 </template>
 

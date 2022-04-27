@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import AddItem from "@/components/TodoList/AddItem";
-import TodoListItems from "@/components/TodoList/TodoListItems";
-import TodoListInfo from "@/components/TodoList/TodoListInfo";
+import AddItem from "@/components/TodoList/Main/AddItem";
+import TodoListItems from "@/components/TodoList/Main/TodoListItems";
+import TodoListInfo from "@/components/TodoList/Main/TodoListInfo";
 
 export default {
   name: "TodoList",

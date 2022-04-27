@@ -6,8 +6,8 @@
       dense
       filled
       label="Things To Do"
-      @blur="addItem"
-      @keydown.enter="addItem"
+      @blur="add"
+      @keydown.enter="add"
   >
   </v-text-field>
 </template>
@@ -15,6 +15,7 @@
 <script>
 import {nanoid} from 'nanoid'
 import {VTextField} from 'vuetify/lib'
+import {mapMutations} from 'vuex'
 
 export default {
   name: "AddItem",
@@ -25,15 +26,17 @@ export default {
     }
   },
   methods: {
-    addItem() {
+    ...mapMutations('TodoList', ['addItem']),
+    add() {
       if (this.itemTitle.trim() === '') {
         return;
       }
 
-      this.$root.$emit('addItem', {
+      this.addItem({
         id: nanoid(),
         title: this.itemTitle,
-        date: new Date().getTime(),
+        startDate: new Date().getTime(),
+        finishDate: null,
         done: false,
         important: false,
       });

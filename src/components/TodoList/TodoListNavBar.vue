@@ -1,7 +1,7 @@
 <template>
   <v-tabs align-with-title>
     <v-tab :to="{name: 'TodoListMain'}">Main</v-tab>
-    <v-tab :to="{name: 'TodoListHistory'}" disabled>History</v-tab>
+    <v-tab :to="{name: 'TodoListHistory'}">History</v-tab>
   </v-tabs>
 </template>
 

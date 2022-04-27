@@ -11,34 +11,27 @@
 
 <script>
 import {VProgressCircular, VBtn} from 'vuetify/lib'
+import {mapMutations, mapGetters} from "vuex";
 
 export default {
   name: "TodoListInfo",
   components: {VProgressCircular, VBtn},
   data() {
     return {
-      listInfo: {},
       colors: ['#C3423F', '#EE5622', '#FDE74C', '#9BC53D', '#5BC0EB']
     }
   },
   computed: {
+    ...mapGetters('TodoList', {listInfo: 'info'}),
     rate() {
       return this.listInfo.done / this.listInfo.length * 100
     },
     color() {
       return this.colors[Math.floor(this.rate / 20) - 1]
-    }
+    },
   },
   methods: {
-    getInfo(info) {
-      this.listInfo = {...this.listInfo, ...info}
-    },
-    deleteDone() {
-      this.$root.$emit('deleteDone');
-    }
-  },
-  mounted() {
-    this.$root.$on('Info', this.getInfo);
+    ...mapMutations('TodoList', ['deleteDone']),
   },
 }
 </script>
