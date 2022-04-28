@@ -32,22 +32,24 @@
           shapeType="circle"
       >
       </vue-particles>
-      <v-card-title class="mt-10 ml-10 mr-10">
-        {{ sentence.hitokoto }}
-      </v-card-title>
-      <v-card-subtitle class="ml-10 mr-10">
-        {{ sentence.from_who || sentence.creator }}
-      </v-card-subtitle>
-      <v-card-text class="ml-10 mr-10">
-        {{ date }}
-        <br>
-        <a href="https://developer.hitokoto.cn/">@hitokoto</a>
-      </v-card-text>
-      <v-card-actions class="mb-5 ml-10 mr-10 mt-3">
-        <v-btn :color="colors[Math.floor(Math.random() * 5)]" :disabled="click || loading" @click="antiShake">
-          <span class="btn-text">换一个?</span>
-        </v-btn>
-      </v-card-actions>
+      <div v-show="!loading" style="z-index: 10">
+        <v-card-title class="mt-10 ml-10 mr-10">
+          {{ sentence.hitokoto }}
+        </v-card-title>
+        <v-card-subtitle class="ml-10 mr-10">
+          {{ sentence.from_who || sentence.creator }}
+        </v-card-subtitle>
+        <v-card-text class="ml-10 mr-10">
+          {{ date }}
+          <br>
+          <a href="https://developer.hitokoto.cn/" style="z-index: 3;">@hitokoto</a>
+        </v-card-text>
+        <v-card-actions class="mb-5 ml-10 mr-10 mt-3">
+          <v-btn :color="colors[Math.floor(Math.random() * 5)]" :disabled="click || loading" @click="antiShake">
+            <span class="btn-text">换一个?</span>
+          </v-btn>
+        </v-card-actions>
+      </div>
     </v-card>
   </div>
 </template>
@@ -80,7 +82,7 @@ export default {
   },
   methods: {
     getSentence() {
-      fetch('https://v1.hitokoto.cn?c=a&c=b&c=d&c=c&c=h&c=i&max_length=24').then(
+      fetch('https://v1.hitokoto.cn?c=a&c=b&c=d&c=c&c=h&c=i&max_length=20').then(
           response => response.json()
       ).then(
           json => {
